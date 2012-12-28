@@ -16,7 +16,7 @@ add_action( 'init', 'wds_bp_registration_options_member_requests');
 function wds_bp_registration_options_member_requests(){
 	if(is_admin()){
 		global $wpdb, $bp, $wds_bp_member_requests;
-		$rs = $wpdb->get_results( $wpdb->prepare( "Select ID from ".$wpdb->base_prefix."users where user_status in (2,69)" ) );
+		$rs = $wpdb->get_results( $wpdb->prepare( 'Select ID from '.$wpdb->base_prefix.'users where user_status in (2,69)' , '') );
 		$wds_bp_member_requests = count( $rs );
 	}
 }
@@ -79,10 +79,10 @@ function wds_bp_registration_options_form_actions(){
 						}
 						wp_delete_user( $user_id );	
 					} elseif ( $action == "Approve" ) {
-						$sql="update ".$wpdb->base_prefix."users set user_status=0 where ID=$user_id";
-						$wpdb->query($wpdb->prepare($sql));
-						$sql="update ".$wpdb->base_prefix."bp_activity set hide_sitewide=0 where user_id=$user_id";
-						$wpdb->query($wpdb->prepare($sql));
+						$sql='update '.$wpdb->base_prefix."users set user_status=0 where ID={$user_id}";
+						$wpdb->query($wpdb->prepare($sql, ''));
+						$sql='update ' .$wpdb->base_prefix."bp_activity set hide_sitewide=0 where user_id={$user_id}";
+						$wpdb->query($wpdb->prepare($sql, ''));
 					}
 					//only send out message if one exists
 					if ( $subject && $message ) {
@@ -95,7 +95,7 @@ function wds_bp_registration_options_form_actions(){
 				}
 			}
 			//reset global
-			$rs = $wpdb->get_results( $wpdb->prepare( "Select ID from ".$wpdb->base_prefix."users where user_status in (2,69)" ) );
+			$rs = $wpdb->get_results( $wpdb->prepare( 'Select ID from '.$wpdb->base_prefix.'users where user_status in (2,69)', '' ) );
 			$wds_bp_member_requests = count( $rs );
 		}
 	}
@@ -248,9 +248,9 @@ function bp_registration_options_member_requests() {
 		if ( $wds_bp_member_requests > 0 ) { 
 			if (isset($_GET["p"])) { $page  = $_GET["p"]; } else { $page=1; };
 			$start_from = ($page-1) * 20;
-			$sql = "select ID from ".$wpdb->base_prefix."users where user_status in (2,69) order by user_registered LIMIT $start_from, 20";
+			$sql = 'select ID from ' .$wpdb->base_prefix."users where user_status in (2,69) order by user_registered LIMIT {$start_from}, 20";
 			$total_pages = ceil($wds_bp_member_requests / 20);
-			$rs = $wpdb->get_results( $wpdb->prepare( $sql ) );?>
+			$rs = $wpdb->get_results( $wpdb->prepare( $sql , '') );?>
             <form method="post" name="bprwg">
             <?php if ( function_exists('wp_nonce_field') ) wp_nonce_field('bp_reg_options_check'); ?>
             Please approve or deny the following new members:
