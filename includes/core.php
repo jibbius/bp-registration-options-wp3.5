@@ -226,10 +226,10 @@ function wds_bp_registration_options_bp_core_activate_account($user_id){
 	if ( $bp_moderate ) {
 		if ( isset( $_GET['key'] ) ) {
 			//Hide user created by new user on activation. 
-			$sql = 'update '.$wpdb->base_prefix."users set user_status=69 where ID={$user_id}";
+			$sql = 'update '.$wpdb->base_prefix."users set user_status=69 where ID=$user_id";
 			$wpdb->query( $wpdb->prepare( $sql, '') );
 			//Hide activity created by new user
-			$sql = 'update '.$wpdb->base_prefix."bp_activity set hide_sitewide=1 where user_id={$user_id}";
+			$sql = 'update '.$wpdb->base_prefix."bp_activity set hide_sitewide=1 where user_id=$user_id";
 			$wpdb->query( $wpdb->prepare ($sql, '') );
 			//save user ip address
 			update_user_meta($user_id, 'bprwg_ip_address', $_SERVER['REMOTE_ADDR']);
