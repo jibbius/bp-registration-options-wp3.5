@@ -184,8 +184,8 @@ add_action( 'bp_actions', 'wds_bp_registration_options_bp_actions', 50 );
 function wds_bp_registration_options_bp_actions(){
 	global $wpdb, $user_ID, $bp_moderate, $bp;
 	if ( $bp_moderate ) {
-		$sql = 'update '.$wpdb->base_prefix."bp_activity set hide_sitewide=1 where user_id={$user_ID}";
-		$wpdb->query( $wpdb->prepare( $sql, '') );
+		$sql = 'update '.$wpdb->base_prefix.'bp_activity set hide_sitewide=1 where user_id=%d';
+		$wpdb->query( $wpdb->prepare( $sql, $user_ID) );
 	}
 }
 
@@ -226,11 +226,11 @@ function wds_bp_registration_options_bp_core_activate_account($user_id){
 	if ( $bp_moderate ) {
 		if ( isset( $_GET['key'] ) ) {
 			//Hide user created by new user on activation. 
-			$sql = 'update '.$wpdb->base_prefix."users set user_status=69 where ID=$user_id";
-			$wpdb->query( $wpdb->prepare( $sql, '') );
+			$sql = 'update '.$wpdb->base_prefix.'users set user_status=69 where ID=%d'; // TODO: Does this really need to be direct SQL?
+			$wpdb->query( $wpdb->prepare( $sql, $user_id) );
 			//Hide activity created by new user
-			$sql = 'update '.$wpdb->base_prefix."bp_activity set hide_sitewide=1 where user_id=$user_id";
-			$wpdb->query( $wpdb->prepare ($sql, '') );
+			$sql = 'update '.$wpdb->base_prefix.'bp_activity set hide_sitewide=1 where user_id=%d'; // TODO: Does this really need to be direct SQL?
+			$wpdb->query( $wpdb->prepare ($sql, $user_id) );
 			//save user ip address
 			update_user_meta($user_id, 'bprwg_ip_address', $_SERVER['REMOTE_ADDR']);
 			//email admin about new member request
@@ -245,4 +245,3 @@ function wds_bp_registration_options_bp_core_activate_account($user_id){
 }
 function wds_bp_registration_options_bp_before_member_header(){
 }
-?>

@@ -22,4 +22,3 @@ function wds_bp_registration_options_init() {
 	$bp_registration_options = new BP_Registration_Options;
 }
 add_action( 'bp_include', 'wds_bp_registration_options_init' );
-?>
