@@ -237,7 +237,7 @@ function wds_bp_registration_options_bp_core_activate_account($user_id){
 			$user = get_userdata( $user_id );
 			$user_name = $user->user_login;
 			$user_email = $user->user_email;
-			$mod_email = $user_name." (".$user_email.") would like to become a member of your website, to accept or reject their request please go to ".get_bloginfo("url")."/wp-admin/admin.php?page=bp-registration-options&view=members \n\n";
+			$mod_email = $user_name." (".$user_email.") would like to become a member of your website, to accept or reject their request please go to ".admin_url('/admin.php?page=bp_registration_options_member_requests')." \n\n";
 			$admin_email = get_bloginfo( 'admin_email' );
 			wp_mail( $admin_email, 'New Member Request', $mod_email );
 		}

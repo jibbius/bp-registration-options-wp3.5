@@ -117,7 +117,7 @@ function wds_bp_registration_options_admin_messages(){
 		if ( $wds_bp_member_requests != 1 ) {
 			$s = 's';
 		}
-		echo '<div class="error"><p>You have <a href="'.site_url().'/wp-admin/admin.php?page=bp_registration_options_member_requests"><strong>'.$wds_bp_member_requests.' new member request'.$s.'</strong></a> that need to be approved or denied. Please <a href="'.site_url().'/wp-admin/admin.php?page=bp_registration_options_member_requests">click here</a> to take action.</p></div>';
+		echo '<div class="error"><p>You have <a href="'.admin_url('/admin.php?page=bp_registration_options_member_requests').'"><strong>'.$wds_bp_member_requests.' new member request'.$s.'</strong></a> that need to be approved or denied. Please <a href="'.admin_url('/admin.php?page=bp_registration_options_member_requests').'">click here</a> to take action.</p></div>';
 	}
 }
 
