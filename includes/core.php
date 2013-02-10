@@ -225,13 +225,13 @@ function wds_bp_registration_options_bp_after_activate_content(){
 add_action( 'bp_core_activate_account', 'wds_bp_registration_options_bp_core_activate_account');
 function wds_bp_registration_options_bp_core_activate_account($user_id){
 	global $wpdb, $bp_moderate;
-	if ( $bp_moderate ) {
+	if ( $bp_moderate &&  $user_id > 0) {
 		if ( isset( $_GET['key'] ) ) {
-			//Hide user created by new user on activation. 
-			$sql = 'update '.$wpdb->base_prefix.'users set user_status=69 where ID=%d'; // TODO: Does this really need to be direct SQL?
+			//Hide user created by new user on activation.
+			$sql = 'update '.$wpdb->base_prefix.'users set user_status=69 where ID=%d';
 			$wpdb->query( $wpdb->prepare( $sql, $user_id) );
 			//Hide activity created by new user
-			$sql = 'update '.$wpdb->base_prefix.'bp_activity set hide_sitewide=1 where user_id=%d'; // TODO: Does this really need to be direct SQL?
+			$sql = 'update '.$wpdb->base_prefix.'bp_activity set hide_sitewide=1 where user_id=%d';
 			$wpdb->query( $wpdb->prepare ($sql, $user_id) );
 			//save user ip address
 			update_user_meta($user_id, 'bprwg_ip_address', $_SERVER['REMOTE_ADDR']);
