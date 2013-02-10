@@ -31,6 +31,7 @@ function wds_bp_registration_options_core_init(){
 			if ( $bp->current_component && $user_ID == 0 && $bp->current_component != 'register' && $bp->current_component != 'activate' ) {
 				if ( $bp->pages->register->slug ) {
 					wp_redirect( site_url().'/'.$bp->pages->register->slug );
+					exit();
 				} else {
 					exit();
 				}
@@ -39,6 +40,7 @@ function wds_bp_registration_options_core_init(){
 				$user = get_userdata($user_ID);
 				if ( $user->user_status == 69 ) {
 					wp_redirect( $bp->loggedin_user->domain );
+					exit;
 				}
 			}
 		}
@@ -205,7 +207,7 @@ function wds_bp_registration_options_bp_after_activate_content(){
 		switch_to_blog(1);
 	}
 	if ( $bp_moderate && isset( $_GET['key'] ) || $bp_moderate && $user_ID > 0 ) {
-		$activate_message = get_option('bprwg_activate_message');
+		$activate_message = stripslashes(get_option('bprwg_activate_message'));
 		echo '<div id="message" class="error"><p>'.$activate_message.'</p></div>';
 	}
 	if ( is_multisite() ) { 
