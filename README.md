@@ -1,4 +1,1 @@
-bp-registration-options-wp3.5
-=============================
-
-Updates to bp-registration-options; to cater for wp3.5
+Refer here instead: https://github.com/jibbius/Gravity-Forms-Digest-Bulk-Reports
